@@ -107,13 +107,15 @@ class BladeExtendedSyntax extends __AbstractBladeSyntax
      */
     private function setupIfHasElements() {
         Blade::directive('if_has_elements', function($expression) {
-            return '<?php \n'
-            .'$my_var = $this->stringParamAsString($expression);\n'
-            .'$__array_with_items = isset($$my_var) && is_array($$my_var) && count($$my_var)>0;\n'
-            .'$__collection_with_items = isset($$my_var) && $$my_var instanceof Illuminate\Database\Eloquent\Collection && count($$my_var->items)>0;\n'
-            .'if ($__array_with_items || $__collection_with_items): \n'
-            .'  unset($__array_with_items);\n'
-            .'  unset($__collection_with_items);\n';
+            return '<?php '."\n"
+            .'$my_var = '.$this->stringParamAsString($expression).';'."\n"
+            .'\Log::debug("my_var is : ".$my_var);'."\n"
+            .'$__array_with_items = isset($my_var) && is_array($my_var) && count($my_var)>0;'."\n"
+            .'$__collection_with_items = isset($my_var) && $my_var instanceof Illuminate\Database\Eloquent\Collection && count($my_var->count())>0;'."\n"
+            .'if ($__array_with_items || $__collection_with_items): '."\n"
+            .'  unset($__array_with_items);'."\n"
+            .'  unset($__collection_with_items);'."\n"
+            .'?>'."\n";
             
         });
     }
