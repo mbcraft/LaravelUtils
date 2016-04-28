@@ -16,40 +16,66 @@ After adding the package is downloaded via composer.json dependency, add the
 following commands to your app/Console/Kernel.php :
 `
     protected $commands = [
+
         ...
+
         \Mbcraft\Laravel\Lang\Commands\RegenerateLangHelpers::class,
+
         \Mbcraft\Laravel\Lang\Commands\HideLang::class,
+
         \Mbcraft\Laravel\Lang\Commands\ShowLang::class,
+
         \Mbcraft\Laravel\Http\Commands\RegenerateRoutesHelpers::class,
+
         \Mbcraft\Laravel\Misc\Commands\LogClear::class,
+
         \Mbcraft\Laravel\Icons\Commands\RegenerateIconHelpers::class,
+
         \Mbcraft\Laravel\Misc\Commands\ResourcePathCheck::class
+
     ];
+
 `
 
 and the followings to your app/Http/Kernel.php middleware classes :
 
 `
     protected $middleware = [
+
 	...
+
         \Mbcraft\Laravel\Http\Middleware\ConfigureCarbon::class,
+
         \Mbcraft\Laravel\Http\Middleware\BladeExtendedSyntax::class,
+
         \Mbcraft\Laravel\Http\Middleware\BladeAssetsSyntax::class,
+
         \Mbcraft\Laravel\Http\Middleware\BladeWidgetsSyntax::class,
+
         \Mbcraft\Laravel\Http\Middleware\LocalizationAliases::class
+
     ];
+
 `
 You should also create a writable folder inside 'storage/' called 'generated_classes/' and add the path to your composer.json project file in order to enable loading of generated classes :
 
 `
     "autoload": {
+
         "classmap": [
+
             "database"
+
         ],
+
         "psr-4": {
+
             "App\\": "app/",
+
 	    "": [...,"storage/generated_classes/"]   <-- this path must be added to the default namespace
+
         }
+
     }, 
 `
 
