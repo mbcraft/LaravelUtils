@@ -15,6 +15,7 @@ This package contains various helper classes for Laravel :
 After adding the package is downloaded via composer.json dependency, add the
 following commands to your app/Console/Kernel.php :
 `
+
     protected $commands = [
 
         ...
@@ -40,6 +41,7 @@ following commands to your app/Console/Kernel.php :
 and the followings to your app/Http/Kernel.php middleware classes :
 
 `
+
     protected $middleware = [
 
 	...
@@ -60,6 +62,7 @@ and the followings to your app/Http/Kernel.php middleware classes :
 You should also create a writable folder inside 'storage/' called 'generated_classes/' and add the path to your composer.json project file in order to enable loading of generated classes :
 
 `
+
     "autoload": {
 
         "classmap": [
@@ -77,6 +80,7 @@ You should also create a writable folder inside 'storage/' called 'generated_cla
         }
 
     }, 
+
 `
 
 This should complete the installation of this package. Run a 
