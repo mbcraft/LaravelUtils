@@ -1,0 +1,26 @@
+{
+    "name": "mbcraft/laravelutils",
+    "description": "LaravelUtils is a library with helper classes for the Laravel Framework.",
+    "license": "MIT",
+    "keywords" : ["laravel","commands","middleware","controllers","entities"],
+    "authors": [
+        {
+            "name": "Marco Bagnaresi",
+            "email": "info@mbcraft.it",
+	    "homepage": "http://www.mbcraft.it"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+	    "mbcraft/piol": ">=2.0.*",
+	    "laravel/framework": ">=5.1.*"
+        },
+    "require-dev": {
+	    "phpunit/phpunit": "3.*",
+	},
+    "autoload": {
+        "psr-4": {
+            "": ["src/"]
+        }
+    }
+}
