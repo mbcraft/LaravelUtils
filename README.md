@@ -207,6 +207,8 @@ Opening widgets ends with '__begin.blade.php' and ending widgets ends with '__en
 The setup.blade.php inside the widget category is loaded whenever a widget of that category is used. This is to be used with the '@require...' commands explained before.
 
 
+... to be completed ...
+
 
 ====
 
