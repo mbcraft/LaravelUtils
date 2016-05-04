@@ -4,7 +4,6 @@ namespace Mbcraft\Laravel\Http\Middleware;
 
 use Closure;
 use Blade;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * This middleware adds blade support for :
@@ -97,7 +96,7 @@ class BladeExtendedSyntax extends __AbstractBladeSyntax
      * Creates a directive to check if the variable has elements (exists and has
      * at least one element)
      * 
-     * usage : @if_has_elements("my_list")
+     * usage : @if_has_elements($my_list)
      * 
      * ...
      * 
