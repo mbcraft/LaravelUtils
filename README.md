@@ -10,10 +10,24 @@ This package contains various helper classes for Laravel :
 - route helpers generator
 - database migrations helpers
 
-# How to install
+# How to install with composer
 
-After adding the package is downloaded via composer.json dependency, add the
-following commands to your app/Console/Kernel.php :
+In your composer.json file, add the following :
+
+`
+
+"require": {
+	......
+        "mbcraft/laravelutils": "dev-master"     <-- add this
+    },
+
+`
+
+The run 'php composer.phar update' to download the package.
+
+
+After downloading the package adding it as a dependency in your composer.json file, add the
+following lines to your 'app/Console/Kernel.php' file :
 `
 
     protected $commands = [
@@ -59,7 +73,8 @@ and the followings to your app/Http/Kernel.php middleware classes :
     ];
 
 `
-You should also create a writable folder inside 'storage/' called 'generated_classes/' and add the path to your composer.json project file in order to enable loading of generated classes :
+You should also create a writable folder inside your laravel installation 'storage/' folder called 'generated_classes/'.
+Also add this folder to your composer.json project file in the classloading section in order to enable loading of generated classes :
 
 `
 
@@ -90,11 +105,11 @@ This should complete the installation of this package. Run a
 ./artisan
 `
 
-in order to check if the new artisan commands are in place.
+in order to check if the new artisan commands are now available.
 
 Here is a brief explanation of the features provided by this package :
 
-# New Artisan commands :
+# New Laravel Artisan commands :
 
 The following commands are added to artisan :
 
@@ -102,9 +117,9 @@ The following commands are added to artisan :
 
 - lang:hide -> hides a language folder
 - lang:show -> shows a language folder
-- lang:regenerate_helpers
+- lang:regenerate_helpers -> regenerates the language helper classes
 
-These commands to work using only one language folder at a time. Keep in mind
+Use these commands to work using only one language folder at a time. Keep in mind
 that the generated helpers will inherit all values from the root language files with the same name, so:
 
 
@@ -113,7 +128,7 @@ messages.php
 customers/messages.php   
 
 
-... will generate two classes : App\Lang\LMessages.php and App\Lang\Customers\LMessages.php and the second one will inherit all the values from the previous one, so inside code you will simply use the more specific one but will also access all the values from the generic one.
+... will generate two classes : 'App\Lang\LMessages.php' and 'App\Lang\Customers\LMessages.php' and the second one will inherit all the values from the previous one, so inside code you will simply use the more specific one but will also be able to access all the values from the generic one.
 
 [log]
 
@@ -122,11 +137,11 @@ customers/messages.php
 
 [icons]
 
-- icons:regenerate_helpers -> this will generate helper class for the icons. 
+- icons:regenerate_helpers -> this will generate helper class for the font icons. 
 
-The font awesome one is accessed simply with :
+The 'font awesome' font icons class definitions are bundled with this package and are accessed simply with :
 
-FA::<your icon method here>
+FA::<icon method>
 
 so, for example :
 
@@ -140,9 +155,9 @@ will output this text :
 <i class='fa fa-clock-o fa-fw'></i>
 
 
-You can also pass a second parameter as a tooltip text. The first parameter is a list of additional space separated classes to add to the default ones.
+You can also pass a second parameter to the method as a tooltip text for the icon. The first parameter is a list of space separated additional css classes to add to the default ones.
 
-Actually only font-awesome helpers is provided. Keep in mind to include the required stylesheet (not provided). The names are taken from fontawesome.org cheatsheet.
+Actually only font-awesome helpers is bundled with this package (only class definition, not actual font awesome files). Keep in mind to include the required stylesheet (not provided). The names of the icons are taken from fontawesome.org cheatsheet.
 
 [routing]
 
@@ -161,13 +176,13 @@ I suggest using a '.do' suffix on route names defined inside app/Http/routes.php
 - resources:check_path -> this will check all the views found inside the view path of your project, for all the resources required with
 
 
-* @require_local_js (blade extension, see the 'Blade Extensions' section)
-* @require_local_css (blade extension, see the 'Blade Extensions' section)
+* @require_local_js (blade extension, see the 'Laravel Blade Extensions' section)
+* @require_local_css (blade extension, see the 'Laravel Blade Extensions' section)
 
 
 ... and for each view will tell if any path is broken.
 
-# Blade Extensions
+# Laravel Blade Extensions
 
 ## Resources (assets)
 
@@ -178,7 +193,7 @@ The following blade extensions are added :
 - @require_remote_js(<remote_resource_path>) -> adds the resource to the js resource list needed
 - @require_remote_css(<remote_resource_path>) -> adds the resource to the css resource list needed
 
-You can safaly call more than once this "include" calls and the resource will actually be loaded only once.
+You can safely call more than once this "require" calls and the resource will actually be loaded only once.
 
 ## Logic
 
@@ -207,7 +222,52 @@ Opening widgets ends with '__begin.blade.php' and ending widgets ends with '__en
 The setup.blade.php inside the widget category is loaded whenever a widget of that category is used. This is to be used with the '@require...' commands explained before.
 
 
-... to be completed ...
+# Database helper classes
+
+## ResetTablesSeeder trait class
+
+The trait 'Mbcraft\Laravel\Database\ResetTablesSeederTrait' is provided to help resetting the table content for re-seeding. To use it, simply use it in your laravel 'database/seeds/DatabaseSeeder.php' class.
+Then add a 'protected $reset_tables' array containing the names of all the tables of which you want to empty, in reverse dependency order, eg:
+
+`
+
+protected $reset_tables = [
+      
+        
+                "configs",
+
+                "invoices",
+                "customers",
+
+		...
+        
+                "SENTINEL_throttle",      // if you are using the cartalyst/sentinel package,
+                "SENTINEL_reminders",     // this is the correct order for
+                "SENTINEL_persistences",  // emptying all the tables
+                "SENTINEL_activations",
+                "SENTINEL_role_users",
+                "SENTINEL_roles",
+                "SENTINEL_users",  
+    ];
+
+`
+
+## SoftDeletesCascade trait class
+
+This trait will enable your "softDeletes" models to trigger a cascade behaviour as it usually happens when the real deletes occurs in databases.
+Simply add this trait to your model class, then add a 'softCascades' array, containing the list of methods that reaches objects to be soft deleted when this one it soft deleted, eg:
+
+`
+
+protected $softCascades = ["tickets"];  // this can be in a customer class
+
+`
+
+# Entity controllers
+
+
+... to be continued ...
+
 
 
 ====
