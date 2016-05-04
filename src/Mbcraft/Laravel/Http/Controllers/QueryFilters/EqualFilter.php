@@ -17,6 +17,10 @@ class EqualFilter implements IQueryFilter {
         return $this->column;
     }
     
+    public function getType() {
+        return "equal";
+    }
+    
     public function getValue() {
         return $this->value;
     }

@@ -74,8 +74,12 @@ trait Index {
     /**
      * Hook method to override for listing the supported filters and their parameters
      * used in query builder.
+     * 
+     * This is used basically to check the allowed filters before the are actually applied
      */
+    /*
     protected function getSupportedModelFilters() {
         return array();
-    }
+    } 
+    */
 }

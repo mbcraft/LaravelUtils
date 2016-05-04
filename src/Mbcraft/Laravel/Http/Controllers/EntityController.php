@@ -37,21 +37,21 @@ class EntityController extends Controller {
     }
     
     protected function getRedirectFor($action) {
-        
+        $model_class = static::MODEL_CLASS;
         if (defined("static::ROUTE_MANY"))
             $route_many = static::ROUTE_MANY;
         else {
-            $route_many = static::many_entities_route();
+            $route_many = $model_class::many_entities();
         }
         return Redirect::route("admin.".$route_many.".".$action);
     }
     
     protected function getRouteFor($action,$params = array()) {
-        
+        $model_class = static::MODEL_CLASS;
         if (defined("static::ROUTE_MANY"))
             $route_many = static::ROUTE_MANY;
         else {
-            $route_many = static::many_entities_route();
+            $route_many = $model_class::many_entities();
         }
         return URL::route("admin.".$route_many.".".$action,$params);
     }

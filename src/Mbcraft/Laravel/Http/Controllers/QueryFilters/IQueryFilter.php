@@ -17,6 +17,11 @@ interface IQueryFilter {
     function getKey();
     
     /**
+     * Get the type of this filter
+     */
+    function getType();
+    
+    /**
      * Gets the value that is used for this filter
      */
     function getValue();
