@@ -265,10 +265,51 @@ protected $softCascades = ["tickets"];  // this can be in a customer class
 
 # Entity controllers
 
+Some traits have been developed to help creating entity controllers.
+The available traits are for these behaviours : index, create, edit, show, delete and restore.
 
-... to be continued ...
+To use them, create a new controller and make it inherit EntityController :
+
+`
+
+<?php
+
+use Mbcraft\Laravel\Http\Controllers\EntityController;
+
+//these are for the traits!!
+// use Mbcraft\Laravel\Http\Controllers\Behaviours\ImportedIndex;
+use Mbcraft\Laravel\Http\Controllers\Behaviours\Index;
+// use Mbcraft\Laravel\Http\Controllers\Behaviours\Create;
+use Mbcraft\Laravel\Http\Controllers\Behaviours\Edit;
+// use Mbcraft\Laravel\Http\Controllers\Behaviours\Delete; 
+// use Mbcraft\Laravel\Http\Controllers\Behaviours\Restore; 
+use Mbcraft\Laravel\Http\Controllers\Behaviours\Show;
 
 
+class InvoicesController extends EntityController {
+
+
+use Index, Edit, Show;
+
+...
+
+
+`
+
+In the example a controller that lets the user list, edit and show the entities.
+You should also define some constants that tells the controller what model class to use and if route and views needs some prefix.
+
+`
+...
+    const MODEL_CLASS = "App\Models\Invoice";
+    const VIEW_PREFIX = "admin.";
+    const ROUTE_PREFIX = "admin.";
+...
+`
+
+And that's all. By default the views named 'admin.invoces.index', 'admin.invoices.edit', 'admin.invoices.show' will be used as views for the actions.
+The routes for this action will be mostly named as the corresponding view.
+The model class must implement the Mbcraft\Laravel\Models\INameable interface.
 
 ====
 
