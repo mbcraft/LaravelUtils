@@ -9,7 +9,8 @@ interface INameable {
     
     /**
      * Returns the name of one entity of this model (singular).
-     * Example : "invoice"
+     * If the name consist of more than one word, words must be underscore separated.
+     * Example : "invoice", "system_notification"
      * 
      * @return string The string name of one entity.
      */
@@ -17,7 +18,8 @@ interface INameable {
     
     /**
      * Returns the string used to identify many entities of this model (plural).
-     * Example : "invoices"
+     * If the name consist of more than one word, words must be underscore separated.
+     * Example : "invoices", "system_notifications"
      * 
      * @return string The string name of many entities.
      */
