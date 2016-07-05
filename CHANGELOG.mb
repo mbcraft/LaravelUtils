@@ -1,0 +1,33 @@
+1.1
+
+- Added custom view name for getCreate, deprecated default old view name choice
+    select_from_index and select_from_show
+- Added UsageHelper, now just for deprecation
+- Added view choice from route name in index, create, edit and show routes and controllers.
+- Added default parameter (id, view_name) format check for all routes.
+
+
+1.0
+
+- Helper EntityController class with pluggable traits for Index, Show, Create, Delete, Edit and Restore actions.
+- Internationalization framework with inheritance and some artisan commands, and handy localization functions
+- RouteHelper class that works with EntityController
+- Route helper classes generator command for artisan
+- Icon framework for fast outputting icons into html
+- Soft delete cascade support
+- Database reset before seeding trait
+- Blade extended syntax with :
+    - css & js assets requirements
+    - ifdef and ifndef conditional blocks
+    - index element for loops
+    - if_has_elements conditional block
+    - safe_count output
+    - if_column, if_action conditional blocks
+    - menuitem delimiter directives
+    - begin_widget, end_widget and widget support
+- Middleware classes :
+    - Automatic Carbon date initialization
+    - Localization functions definition
+- Additional Artisan commands :
+    - Log clear
+    - Resource path checking
