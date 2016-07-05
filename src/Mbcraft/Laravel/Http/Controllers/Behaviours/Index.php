@@ -4,6 +4,7 @@ namespace Mbcraft\Laravel\Http\Controllers\Behaviours;
 
 use Mbcraft\Laravel\Http\Controllers\QueryFilters\QueryFilterFactory;
 
+use Mbcraft\Laravel\Misc\UsageHelper;
 use Input;
 
 /**
@@ -14,8 +15,13 @@ trait Index {
         
     /**
      * Returns the page for the entity index form.
+     *
+     * @param array filters The list of filters to be applied to the query for the index
+     * @param string view The view name, defaults to 'index'.
+     *
+     * @return View The view to show
      */
-    public function getIndex($filters = array()) {
+    public function getIndex($filters = array(),$view_name = 'index') {
         
         $model_class = self::MODEL_CLASS;
         
@@ -28,7 +34,7 @@ trait Index {
         if (isset($this->import_select_filters)) {
             foreach ($this->import_select_filters as $f => $f_spec) {   
                 if (Input::has($f)) {
-                    $filters[] = QueryFilterFactory::{$f_spec}($f,Input::get($f));
+                    $filters[] = QueryFilterFactory::$f_spec($f,Input::get($f));
                 }
             }
         }
@@ -59,16 +65,23 @@ trait Index {
         }
         
         $view_params = array_merge($entity_params,$this->getSummaryAdditionalEntities());
-        
+
+        //ajax view, maybe will be fixed in the future ...
         //show the select for the elements - this is used for showing the 
         // select control inside the form with all the needed data
         // no external layout is involved
-        if (Input::has("select") && $this->select_from_index===TRUE) {
-            return $this->getViewFor('select_from_index', $view_params);
-        } else {
-            // Show the index page for this entity
-            return $this->getViewFor('index', $view_params);
+        if (Input::has("select") && $this->select_from_index===true) {
+            UsageHelper::deprecated(Input::has('select'), 'input', 'select', 'ajax');
+            UsageHelper::deprecated($this->select_from_index, 'controller variable', 'select_from_index', 'enable_ajax_index');
+            \Log::debug('Use dedicated controller method.');
+
+            $view_name = 'select_from_index';
         }
+
+        // Return the right view with its parameters
+        
+        return $this->getViewFor($view_name, $view_params);
+
     }
     
     /**

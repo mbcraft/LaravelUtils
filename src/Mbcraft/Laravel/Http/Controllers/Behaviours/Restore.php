@@ -12,10 +12,9 @@ use Input;
 trait Restore {
 
     /**
-     * Restore a deleted entity.
+     * Restore a soft deleted entity. Requires an id input parameter of the entity to restore.
      *
-     * @param  int      $id
-     * @return Redirect
+     * @return Redirect The redirect to follow after the operation
      */
     public function postRestore() {
 

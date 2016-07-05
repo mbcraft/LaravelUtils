@@ -23,6 +23,16 @@ class RouteHelper {
     
     public static function init($router) {
         self::$route = $router;
+
+        self::initDefaultParameterPatterns();
+    }
+
+    /**
+     * Added default patterns for id and view_name
+     */
+    private static function initDefaultParameterPatterns() {
+        self::$route->pattern('id','[0-9]+');
+        self::$route->pattern('view_name','[A-Za-z_]+');
     }
     
     /**
@@ -129,9 +139,9 @@ class RouteHelper {
      * @param string $controller_strict_name The strict path of the controller, eg. : Admin/Users
      * @param integer $operation_mask The masks of all the operations allowed.
      * @param string $operation_names_prefix The prefix of all operation names.
-     * @param function $nested_routes A function to execute to declare more routes inside this group.
+     * @param \Closure $nested_routes A function to execute to declare more routes inside this group.
      */
-    public static function declareGuardedEntityManagement($one_entity, $many_entities, $controller_strict_name, $operation_mask,$operation_names_prefix="", $nested_routes = null) {
+    public static function declareGuardedEntityManagement($one_entity, $many_entities, $controller_strict_name, $operation_mask,$operation_names_prefix="", \Closure $nested_routes = null) {
 
         $operation_names_prefix = $operation_names_prefix == "" ? $operation_names_prefix : $operation_names_prefix.".";
         $controller_strict_name =  str_replace("/", "\\", $controller_strict_name);
@@ -141,26 +151,27 @@ class RouteHelper {
 
             if (($operation_mask & self::INDEX_OPERATION) == self::INDEX_OPERATION) {
                 self::$route->get('/', array('as' => $operation_names_prefix.$many_entities.'.index', 'uses' => $controller_strict_name . 'Controller@getIndex'));
+                self::$route->get('/index/{view_name?}', array('as' => $operation_names_prefix.$many_entities.'.index', 'uses' => $controller_strict_name . 'Controller@getIndex'));
             }
             if (($operation_mask & self::CREATE_OPERATION) == self::CREATE_OPERATION) {
-                self::$route->get('create', array('as' => $operation_names_prefix.$many_entities . '.create', 'uses' => $controller_strict_name . 'Controller@getCreate'));
+                self::$route->get('create/{view_name?}', array('as' => $operation_names_prefix.$many_entities . '.create', 'uses' => $controller_strict_name . 'Controller@getCreate'));
                 self::$route->post('create', array('as' => $operation_names_prefix.$many_entities . '.create.do', 'uses' => $controller_strict_name . 'Controller@postCreate'));   
             }
             if (($operation_mask & self::EDIT_OPERATION) == self::EDIT_OPERATION) {
-                self::$route->get('{' . $one_entity . 'Id}/edit', array('as' => $operation_names_prefix.$many_entities . '.edit', 'uses' => $controller_strict_name . 'Controller@getEdit'));
+                self::$route->get('{id}/edit/{view_name?}', array('as' => $operation_names_prefix.$many_entities . '.edit', 'uses' => $controller_strict_name . 'Controller@getEdit'));
                 self::$route->post('edit', array('as' => $operation_names_prefix.$many_entities . '.edit.do', 'uses' => $controller_strict_name . 'Controller@postEdit'));
             }
             if (($operation_mask & self::DELETE_OPERATION) == self::DELETE_OPERATION) {
                 self::$route->post('delete', array('as' => $operation_names_prefix.$many_entities . '.delete.do', 'uses' => $controller_strict_name . 'Controller@postDelete'));
             }
             if (($operation_mask & self::CONFIRM_DELETE_OPERATION) == self::CONFIRM_DELETE_OPERATION) {
-                self::$route->get('{' . $one_entity . 'Id}/confirm-delete', array('as' => $operation_names_prefix.$many_entities . '.confirm-delete', 'uses' => $controller_strict_name . 'Controller@getModalDelete'));
+                self::$route->get('{id}/confirm-delete', array('as' => $operation_names_prefix.$many_entities . '.confirm-delete', 'uses' => $controller_strict_name . 'Controller@getModalDelete'));
             }
             if (($operation_mask & self::RESTORE_OPERATION) == self::RESTORE_OPERATION) {
                 self::$route->post('restore', array('as' => $operation_names_prefix.$many_entities . '.restore.do', 'uses' => $controller_strict_name . 'Controller@postRestore'));
             }
             if (($operation_mask & self::SHOW_OPERATION) == self::SHOW_OPERATION) {
-                self::$route->get('{' . $one_entity . 'Id}', array('as' => $operation_names_prefix.$many_entities . '.show', 'uses' => $controller_strict_name . 'Controller@getShow'));
+                self::$route->get('{id}', array('as' => $operation_names_prefix.$many_entities . '.show', 'uses' => $controller_strict_name . 'Controller@getShow'));
             }
             
             if ($nested_routes!=null)

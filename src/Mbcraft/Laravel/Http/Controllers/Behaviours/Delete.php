@@ -18,7 +18,7 @@ trait Delete {
     /**
      * Delete Confirm modal dialog
      *
-     * @param   int $id Entity id
+     * @param   int $id Entity id to ask deletion confirmation
      * @return  View The modal delete view
      */
     public function getModalDelete($id = null) { 
@@ -33,10 +33,9 @@ trait Delete {
 
     /**
      * Adds the postDelete method to the controller for the given entity
-     * Requires an id parameter which identifies the entity
+     * Requires an id input parameter which identifies the entity
      *
-     * @param  int $id The id of the entity to delete
-     * @return Redirect
+     * @return Redirect The redirect to follow after the delete operation.
      */
     public function postDelete() {
 

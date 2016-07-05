@@ -4,6 +4,7 @@ namespace Mbcraft\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use Mbcraft\Laravel\Misc\UsageHelper;
 use Redirect;
 use View;
 use URL;
@@ -15,7 +16,7 @@ use Illuminate\Support\MessageBag;
  * It implements resource management for a single model class.
  */
 class EntityController extends Controller {
-
+    
     /**
      * Message bag.
      *
@@ -36,6 +37,22 @@ class EntityController extends Controller {
         $this->messageBag = new MessageBag;
     }
     
+    private function getRoutePrefix() {
+        $route_prefix = "";
+        if (defined("static::ROUTE_PREFIX")) {
+            $route_prefix = static::ROUTE_PREFIX;
+        }  else \Log::debug("Route prefix not defined.");
+        return $route_prefix;
+    }
+    
+    private function getViewPrefix() {
+        $view_prefix = "";
+        if (defined("static::VIEW_PREFIX")) {
+            $view_prefix = static::VIEW_PREFIX;
+        }  else \Log::debug("View prefix not defined.");
+        return $view_prefix;
+    }
+    
     protected function getRedirectFor($action) {
         $model_class = static::MODEL_CLASS;
         if (defined("static::ROUTE_MANY"))
@@ -43,7 +60,7 @@ class EntityController extends Controller {
         else {
             $route_many = $model_class::many_entities();
         }
-        return Redirect::route("admin.".$route_many.".".$action);
+        return Redirect::route($this->getRoutePrefix().$route_many.".".$action);
     }
     
     protected function getRouteFor($action,$params = array()) {
@@ -53,17 +70,20 @@ class EntityController extends Controller {
         else {
             $route_many = $model_class::many_entities();
         }
-        return URL::route("admin.".$route_many.".".$action,$params);
+        return URL::route($this->getRoutePrefix().$route_many.".".$action,$params);
     }
     
     protected function getViewFor($action,$params = array()) {
-        
+
+        UsageHelper::deprecated($action=="select_from_index",'view','select_from_index','index_ajax');
+        UsageHelper::deprecated($action=="select_from_show",'view','select_from_show','show_ajax');
+
         $model_class = static::MODEL_CLASS;
         $many_entities = $model_class::many_entities();
         $params["many_entities_route"] = self::many_entities_route();
         $params["one_entity_route"] = self::one_entity_route();
         
-        return View::make("admin.".$many_entities.".".$action,$params);
+        return View::make($this->getViewPrefix().$many_entities.".".$action,$params);
     }
     
     /**

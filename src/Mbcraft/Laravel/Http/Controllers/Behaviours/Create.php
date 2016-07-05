@@ -19,20 +19,25 @@ trait Create {
      * all the data required for creating an entity.
      * 
      * Returns the page for the entity create form.
+     *
+     * @param string $view_name The view name to use, defaults to 'create'.
+     * @return View The created view
      */
-    public function getCreate() {
+    public function getCreate($view_name='create') {
 
         $view_params = array_merge(Input::all(),$this->getDetailsAdditionalEntities());
         
-        // Show the page
-        return $this->getViewFor('create',$view_params);
+        // Return the right view with its parameters
+
+        return $this->getViewFor($view_name, $view_params);
+
     }
     
     /**
      * Adds the postCreate method to the controller for creating entities with all
      * the required parameters submitted with a form.
      *
-     * @return Redirect
+     * @return Redirect The redirect to follow after the operation
      */
     public function postCreate() {
         $validationRules = $this->getPreparedValidationRules(Input::all());

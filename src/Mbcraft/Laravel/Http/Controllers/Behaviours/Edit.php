@@ -16,11 +16,12 @@ trait Edit {
     /**
      * Adds the getEdit method to the controller for showing the entity for editing.
      *
-     * @param  int $id The id of the entity to show for the editing
+     * @param int $id The id of the entity to show for the editing
+     * @param string $view_name The name of the view, defaults to 'edit'.
      * 
-     * @return View
+     * @return View The view to return for the edit operation
      */
-    public function getEdit($id = null) {
+    public function getEdit($id = null,$view_name = 'edit') {
 
         $model_class = self::MODEL_CLASS;
         
@@ -43,16 +44,16 @@ trait Edit {
         $$entity_ref = $entity;
         
         $view_params = array_merge(compact($model_class::one_entity()),$this->getDetailsAdditionalEntities());
+
+        // Return the right view with its parameters
         
-        // Show the page
-        return $this->getViewFor('edit', $view_params);
+        return $this->getViewFor($view_name, $view_params);
     }
 
     /**
      * Adds the postEdit method to the entity controller for saving the changes to the entity
      *
-     * @param  int $id The id of the entity to edit
-     * @return Redirect
+     * @return Redirect The redirect to follow after the edit operation
      */
     public function postEdit() {
         

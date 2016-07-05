@@ -32,7 +32,7 @@ TEXT;
         if (!function_exists('lang') || !function_exists('lang_choice'))
             throw new \Exception("functions lang or lang_choice have not been defined.");
            
-        \Log::debug("Localization alias functions (lang,lang_choice) Completed!");
+        \Log::debug("Localization alias functions definition (lang,lang_choice) initialized!");
         
         return $next($request);
     }

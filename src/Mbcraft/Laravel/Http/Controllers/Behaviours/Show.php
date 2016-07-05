@@ -2,6 +2,7 @@
 
 namespace Mbcraft\Laravel\Http\Controllers\Behaviours;
 
+use Mbcraft\Laravel\Misc\UsageHelper;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Input;
 /**
@@ -13,8 +14,11 @@ trait Show {
     /**
      * Returns the show entity view.
      * Requires the id of the entity.
+     *
+     * @param int id The id of the entity to show
+     * @param string $view_name The name of the view, defaults to 'show'.
      */
-    public function getShow($id = null) {
+    public function getShow($id = null,$view_name = 'show') {
         
         $model_class = self::MODEL_CLASS;
 
@@ -36,15 +40,21 @@ trait Show {
         $$entity_ref = $entity;
         
         $view_params = array_merge(compact($model_class::one_entity()),$this->getDetailsAdditionalEntities());
-        
 
-        if (Input::has('select') && $this->select_from_show===TRUE)
+        //ajax view, maybe will be fixed in the future ...
+        if (Input::has('select') && $this->select_from_show===true) {
+            UsageHelper::deprecated(Input::has('select'), 'Input','select', 'ajax');
+            UsageHelper::deprecated($this->select_from_show, 'controller variable' ,'select_from_show', 'enable_ajax_show');
+            \Log::debug('Use dedicated controller method.');
             //select from show is used for showing the entity details with ajax,
             //so no external layout is involved
-            return $this->getViewFor('select_from_show', $view_params);
-        else
-            //uses external layout to show the entity
-            return $this->getViewFor('show', $view_params);
+            $view_name = 'select_from_show';
+        }
+
+        // Return the right view with its parameters
+        
+        return $this->getViewFor($view_name, $view_params);
+
     }
 
 }
