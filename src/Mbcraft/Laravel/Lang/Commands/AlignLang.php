@@ -38,8 +38,8 @@ class AlignLang extends Command implements SelfHandling
     protected function getArguments()
     {
         return [
-            ['ref', InputArgument::REQUIRED, 'The name of the reference language.'],
-            ['target', InputArgument::REQUIRED, 'The name of the language to align.']
+            ['ref_lang', null, InputArgument::REQUIRED, 'The name of the reference language.'],
+            ['target_lang', null, InputArgument::REQUIRED, 'The name of the language to align.']
         ];
     }
 
