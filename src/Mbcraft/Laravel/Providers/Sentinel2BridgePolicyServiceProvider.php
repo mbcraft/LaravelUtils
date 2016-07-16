@@ -23,7 +23,6 @@ class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
      * Register any application authentication / authorization services.
      *
      * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
-     * @return void
      */
     public function boot(GateContract $gate)
     {
@@ -51,7 +50,6 @@ class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
     /**
      * Register the authenticator services.
      *
-     * @return void
      */
     protected function registerAuthenticator()
     {
@@ -72,7 +70,6 @@ class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
     /**
      * Register a resolver for the authenticated user.
      *
-     * @return void
      */
     protected function registerUserResolver()
     {
@@ -84,7 +81,6 @@ class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
     /**
      * Register the access gate service.
      *
-     * @return void
      */
     protected function registerAccessGate()
     {
@@ -98,7 +94,6 @@ class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
     /**
      * Register a resolver for the authenticated user.
      *
-     * @return void
      */
     protected function registerRequestRebindHandler()
     {
