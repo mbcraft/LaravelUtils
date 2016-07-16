@@ -26,7 +26,7 @@ class ShowLang extends Command implements SelfHandling
      *
      * @return string
      */
-    protected function getNameInput()
+    protected function getNameArgument()
     {
         return $this->argument('name');
     }
@@ -49,7 +49,7 @@ class ShowLang extends Command implements SelfHandling
      */
     public function handle()
     {
-        $lang = $this->getNameInput();
+        $lang = $this->getNameArgument();
         //
         $target = new Dir("/storage/app/hidden_langs/".$lang);
         if ($target->exists()) {
