@@ -20,7 +20,9 @@ class AlignLang extends Command implements SelfHandling
      *
      * @var string
      */
-    protected $signature = 'lang:align {ref} {target}';
+    protected $signature = 'lang:align 
+    {ref_lang : The name of the reference language.} 
+    {target_lang : The name of the language to align.}';
     /**
      * The console command description.
      *
@@ -37,7 +39,7 @@ class AlignLang extends Command implements SelfHandling
     {
         return [
             ['ref', InputArgument::REQUIRED, 'The name of the reference language.'],
-            ['target', InputArgument::REQUIRED, 'The name of the language to align']
+            ['target', InputArgument::REQUIRED, 'The name of the language to align.']
         ];
     }
 

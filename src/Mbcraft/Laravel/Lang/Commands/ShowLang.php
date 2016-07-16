@@ -13,7 +13,8 @@ class ShowLang extends Command implements SelfHandling
      *
      * @var string
      */
-    protected $signature = 'lang:show {name}';
+    protected $signature = 'lang:show 
+    {name : The name of the language to show}';
     /**
      * The console command description.
      *
@@ -39,7 +40,7 @@ class ShowLang extends Command implements SelfHandling
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the language to show.'],
+            ['name', InputArgument::REQUIRED, 'The name of the language to show'],
         ];
     }
     /**

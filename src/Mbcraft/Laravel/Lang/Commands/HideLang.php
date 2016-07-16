@@ -13,7 +13,8 @@ class HideLang extends Command implements SelfHandling
      *
      * @var string
      */
-    protected $signature = 'lang:hide {name}';
+    protected $signature = 'lang:hide 
+    {name : The name of the language to hide}';
     /**
      * The console command description.
      *
@@ -39,7 +40,7 @@ class HideLang extends Command implements SelfHandling
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the language to hide.'],
+            ['name', InputArgument::REQUIRED, 'The name of the language to hide'],
         ];
     }
     /**
