@@ -106,7 +106,7 @@ Here is a brief explanation of the features provided by this package :
 
 The following commands are available for artisan :
 
-[i18n]
+## I18n
 
 - lang:overview -> shows the list of available and hidden localizations
 - lang:hide -> hides a language folder
@@ -138,7 +138,7 @@ Remember to add the following lines to your app/Console/Kernel.php :
             ];
 
 
-[log]
+## Log
 
 - log:clear -> clears the laravel log inside the 'storage/logs/laravel.log'
 
@@ -151,7 +151,7 @@ Remember to add the following lines to your app/Console/Kernel.php :
             ];
 
 
-[icons]
+## Font icons
 
 - icons:regenerate_helpers -> this will generate helper class for the font icons. 
 
@@ -184,7 +184,7 @@ Remember to add the following lines to your app/Console/Kernel.php :
             ];
 
 
-[routing]
+## Routing
 
 
 - route:regenerate_helpers -> generate helpers for the routing methods. Call route:cache before this one, since the helper is generated from the cache.
@@ -203,7 +203,7 @@ Remember to add the following lines to your app/Console/Kernel.php :
             ];
 
  
-[resources (js and css)]
+## Resources (js and css)
 
 
 - resources:check_path -> this will check all the views found inside the view path of your project, for all the resources required with
