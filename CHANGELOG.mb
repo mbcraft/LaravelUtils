@@ -1,3 +1,9 @@
+1.2
+
+- Added deleted entity to after-delete callback
+- Some fixes in README
+- New service
+
 1.1
 
 - Added custom view name for getCreate, deprecated default old view name choice

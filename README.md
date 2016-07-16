@@ -12,18 +12,12 @@ This package contains various helper classes for Laravel :
 
 # How to install with composer
 
-In your composer.json file, add the following :
+If you are using composer, add the package with 
 
-`
+'php composer.phar require mbcraft/laravelutils'
 
-"require": {
-	......
-        "mbcraft/laravelutils": "dev-master"     <-- add this
-    },
 
-`
-
-The run 'php composer.phar update' to download the package.
+Then run 'php composer.phar install' to download the package.
 
 
 After downloading the package adding it as a dependency in your composer.json file, add the
@@ -52,7 +46,7 @@ following lines to your 'app/Console/Kernel.php' file :
 
 `
 
-and the followings to your app/Http/Kernel.php middleware classes :
+... the followings to your app/Http/Kernel.php middleware classes :
 
 `
 
@@ -98,7 +92,7 @@ Also add this folder to your composer.json project file in the classloading sect
 
 `
 
-This should complete the installation of this package. Run a 
+This should complete the installation of this package. Run
 
 
 `
