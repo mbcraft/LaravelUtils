@@ -305,6 +305,27 @@ And that's all. By default the views named 'admin.invoces.index', 'admin.invoice
 The routes for this action will be mostly named as the corresponding view.
 The model class must implement the Mbcraft\Laravel\Models\INameable interface.
 
+
+# Providers
+
+The provider *Sentinel2BridgePolicyServiceProvider* class that is included can be used to register policies when using the Sentinel 2 package.
+
+Simply create your provider class extending Sentinel2BridgePolicyServiceProvider, add the policies to register to a 
+
+`
+...
+class MyAuthServiceProvider extends Sentinel2BridgePolicyServiceProvider {
+
+    protected $policies = [
+    ... <-- add your policies classes to this array
+    ];
+...
+`
+
+and remember to add this provider to your config/app.php .
+
+
+
 ====
 
 -Marco Bagnaresi
