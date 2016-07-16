@@ -1,10 +1,10 @@
 ## LaravelUtils
 
-This package contains various helper classes for Laravel :
+This package contains various additions for Laravel :
 
-- artisan commands
-- middleware for enchacing blade template syntax
-- controller helper classes for default actions
+- new artisan commands
+- middleware for enhancing blade template syntax
+- controller behaviour traits for default actions
 - localization helpers generator
 - font icons helpers generator
 - route helpers generator
@@ -12,17 +12,16 @@ This package contains various helper classes for Laravel :
 
 # How to install with composer
 
-If you are using composer, add the package with 
+If you are using composer, install the package with 
 
-'php composer.phar require mbcraft/laravelutils'
-
-
-Then run 'php composer.phar install' to download the package.
+    php composer.phar require mbcraft/laravelutils
+    
+    php composer.phar install
 
 
 After downloading the package adding it as a dependency in your composer.json file, add the
 following lines to your 'app/Console/Kernel.php' file :
-`
+
 
     protected $commands = [
 
@@ -44,11 +43,11 @@ following lines to your 'app/Console/Kernel.php' file :
 
     ];
 
-`
+
 
 ... the followings to your app/Http/Kernel.php middleware classes :
 
-`
+
 
     protected $middleware = [
 
@@ -66,11 +65,11 @@ following lines to your 'app/Console/Kernel.php' file :
 
     ];
 
-`
+
 You should also create a writable folder inside your laravel installation 'storage/' folder called 'generated_classes/'.
 Also add this folder to your composer.json project file in the classloading section in order to enable loading of generated classes :
 
-`
+
 
     "autoload": {
 
@@ -90,14 +89,14 @@ Also add this folder to your composer.json project file in the classloading sect
 
     }, 
 
-`
+
 
 This should complete the installation of this package. Run
 
 
-`
-./artisan
-`
+
+    ./artisan
+
 
 in order to check if the new artisan commands are now available.
 
@@ -105,12 +104,14 @@ Here is a brief explanation of the features provided by this package :
 
 # New Laravel Artisan commands :
 
-The following commands are added to artisan :
+The following commands are available for artisan :
 
 [i18n]
 
+- lang:overview -> shows the list of available and hidden localizations
 - lang:hide -> hides a language folder
 - lang:show -> shows a language folder
+- lang:clean -> removes missing keys comparing two languages
 - lang:regenerate_helpers -> regenerates the language helper classes
 
 Use these commands to work using only one language folder at a time. Keep in mind
@@ -124,9 +125,30 @@ customers/messages.php
 
 ... will generate two classes : 'App\Lang\LMessages.php' and 'App\Lang\Customers\LMessages.php' and the second one will inherit all the values from the previous one, so inside code you will simply use the more specific one but will also be able to access all the values from the generic one.
 
+
+Remember to add the following lines to your app/Console/Kernel.php :
+
+    protected $commands = [
+            ...
+            \Mbcraft\Laravel\Lang\Commands\HideLang::class,
+            \Mbcraft\Laravel\Lang\Commands\ShowLang::class,
+            \Mbcraft\Laravel\Lang\Commands\CleanLang::class,
+            \Mbcraft\Laravel\Lang\Commands\OverviewLang::class,
+            ...
+            ];
+
+
 [log]
 
 - log:clear -> clears the laravel log inside the 'storage/logs/laravel.log'
+
+Remember to add the following lines to your app/Console/Kernel.php :
+
+    protected $commands = [
+            ...
+            \Mbcraft\Laravel\Misc\Commands\LogClear::class,
+            ...
+            ];
 
 
 [icons]
@@ -140,18 +162,27 @@ FA::<icon method>
 so, for example :
 
 
-<?= FA::webApplication_Clock_o("fa-fw") ?>
+    <?= FA::webApplication_Clock_o("fa-fw") ?>
 
 
 will output this text :
 
 
-<i class='fa fa-clock-o fa-fw'></i>
+    <i class='fa fa-clock-o fa-fw'></i>
 
 
 You can also pass a second parameter to the method as a tooltip text for the icon. The first parameter is a list of space separated additional css classes to add to the default ones.
 
 Actually only font-awesome helpers is bundled with this package (only class definition, not actual font awesome files). Keep in mind to include the required stylesheet (not provided). The names of the icons are taken from fontawesome.org cheatsheet.
+
+Remember to add the following lines to your app/Console/Kernel.php :
+
+    protected $commands = [
+            ...
+            \Mbcraft\Laravel\Icons\Commands\RegenerateIconHelpers::class,
+            ...
+            ];
+
 
 [routing]
 
@@ -162,6 +193,14 @@ Actually only font-awesome helpers is bundled with this package (only class defi
 This command will generate a 'Routes' and 'FormButtonJSRoutes' classes containing all routing methods defined inside your app/Http/routes.php class.
 The 'Routes' class static methods are used for links to be placed inside links href attribues, while the 'FormButtonJSRoutes' are to be used inside button's onclick event handler and will actually output javascript code (no external js libraries required).
 I suggest using a '.do' suffix on route names defined inside app/Http/routes.php as a convention in order to identify post routes (with '.do' suffix) and get routes. The route method name will actually end with '_do'.
+
+Remember to add the following lines to your app/Console/Kernel.php :
+
+    protected $commands = [
+            ...
+            \Mbcraft\Laravel\Http\Commands\RegenerateRoutesHelpers::class,
+            ...
+            ];
 
  
 [resources (js and css)]
@@ -175,6 +214,15 @@ I suggest using a '.do' suffix on route names defined inside app/Http/routes.php
 
 
 ... and for each view will tell if any path is broken.
+
+Remember to add the following lines to your app/Console/Kernel.php :
+
+    protected $commands = [
+            ...
+            \Mbcraft\Laravel\Misc\Commands\ResourcePathCheck::class
+            ...
+            ];
+
 
 # Laravel Blade Extensions
 
@@ -215,17 +263,38 @@ _widgets/category/name_
 Opening widgets ends with '__begin.blade.php' and ending widgets ends with '__end.blade.php'.
 The setup.blade.php inside the widget category is loaded whenever a widget of that category is used. This is to be used with the '@require...' commands explained before.
 
+## Automatic Carbon configuration
+
+The Date/Time library nesbot/carbon is configured automatically with the laravel time zone.
+
+## Localization aliases
+
+The localization functions **lang** and **lang_choice**, aliases of *trans* and *trans_choice* are added to the available functions.
+
+
+----
+
+Remember to add the following lines to your app/Http/Kernel.php
+
+    protected $middleware = [
+        ...
+        \Mbcraft\Laravel\Http\Middleware\ConfigureCarbon::class,
+        \Mbcraft\Laravel\Http\Middleware\BladeExtendedSyntax::class,
+        \Mbcraft\Laravel\Http\Middleware\BladeAssetsSyntax::class,
+        \Mbcraft\Laravel\Http\Middleware\BladeWidgetsSyntax::class,
+        \Mbcraft\Laravel\Http\Middleware\LocalizationAliases::class
+        ...
+    ];
 
 # Database helper classes
 
 ## ResetTablesSeeder trait class
 
-The trait 'Mbcraft\Laravel\Database\ResetTablesSeederTrait' is provided to help resetting the table content for re-seeding. To use it, simply use it in your laravel 'database/seeds/DatabaseSeeder.php' class.
+The trait **Mbcraft\Laravel\Database\ResetTablesSeederTrait** is provided to help resetting the table content for re-seeding. To use it, simply use it in your laravel 'database/seeds/DatabaseSeeder.php' class.
 Then add a 'protected $reset_tables' array containing the names of all the tables of which you want to empty, in reverse dependency order, eg:
 
-`
 
-protected $reset_tables = [
+    protected $reset_tables = [
       
         
                 "configs",
@@ -244,18 +313,17 @@ protected $reset_tables = [
                 "SENTINEL_users",  
     ];
 
-`
+
 
 ## SoftDeletesCascade trait class
 
 This trait will enable your "softDeletes" models to trigger a cascade behaviour as it usually happens when the real deletes occurs in databases.
 Simply add this trait to your model class, then add a 'softCascades' array, containing the list of methods that reaches objects to be soft deleted when this one it soft deleted, eg:
 
-`
 
-protected $softCascades = ["tickets"];  // this can be in a customer class
 
-`
+    protected $softCascades = ["tickets"];  // this can be in a customer class
+
 
 # Entity controllers
 
@@ -264,63 +332,63 @@ The available traits are for these behaviours : index, create, edit, show, delet
 
 To use them, create a new controller and make it inherit EntityController :
 
-`
-
-<?php
-
-use Mbcraft\Laravel\Http\Controllers\EntityController;
-
-//these are for the traits!!
-// use Mbcraft\Laravel\Http\Controllers\Behaviours\ImportedIndex;
-use Mbcraft\Laravel\Http\Controllers\Behaviours\Index;
-// use Mbcraft\Laravel\Http\Controllers\Behaviours\Create;
-use Mbcraft\Laravel\Http\Controllers\Behaviours\Edit;
-// use Mbcraft\Laravel\Http\Controllers\Behaviours\Delete; 
-// use Mbcraft\Laravel\Http\Controllers\Behaviours\Restore; 
-use Mbcraft\Laravel\Http\Controllers\Behaviours\Show;
 
 
-class InvoicesController extends EntityController {
+    <?php
+    
+    use Mbcraft\Laravel\Http\Controllers\EntityController;
+    
+    //these are for the traits!!
+    // use Mbcraft\Laravel\Http\Controllers\Behaviours\ImportedIndex;
+    use Mbcraft\Laravel\Http\Controllers\Behaviours\Index;
+    // use Mbcraft\Laravel\Http\Controllers\Behaviours\Create;
+    use Mbcraft\Laravel\Http\Controllers\Behaviours\Edit;
+    // use Mbcraft\Laravel\Http\Controllers\Behaviours\Delete; 
+    // use Mbcraft\Laravel\Http\Controllers\Behaviours\Restore; 
+    use Mbcraft\Laravel\Http\Controllers\Behaviours\Show;
+    
+    
+    class InvoicesController extends EntityController {
+    
+    
+    use Index, Edit, Show;
+    
+    ...
 
 
-use Index, Edit, Show;
-
-...
-
-
-`
 
 In the example a controller that lets the user list, edit and show the entities.
 You should also define some constants that tells the controller what model class to use and if route and views needs some prefix.
 
-`
-...
+
+    ...
     const MODEL_CLASS = "App\Models\Invoice";
     const VIEW_PREFIX = "admin.";
     const ROUTE_PREFIX = "admin.";
-...
-`
+    ...
 
-And that's all. By default the views named 'admin.invoces.index', 'admin.invoices.edit', 'admin.invoices.show' will be used as views for the actions.
+
+And that's all. 
+By default the views named 'admin.invoces.index', 'admin.invoices.edit', 'admin.invoices.show' will be used as views for the actions.
 The routes for this action will be mostly named as the corresponding view.
 The model class must implement the Mbcraft\Laravel\Models\INameable interface.
 
 
 # Providers
 
-The provider *Sentinel2BridgePolicyServiceProvider* class that is included can be used to register policies when using the Sentinel 2 package.
+The provider **Sentinel2BridgePolicyServiceProvider** class that is included can be used to register policies when using the Sentinel 2 package.
 
 Simply create your provider class extending Sentinel2BridgePolicyServiceProvider, add the policies to register to a 
 
-`
-...
-class MyAuthServiceProvider extends Sentinel2BridgePolicyServiceProvider {
 
-    protected $policies = [
-    ... <-- add your policies classes to this array
-    ];
-...
-`
+    ...
+    class MyAuthServiceProvider extends Sentinel2BridgePolicyServiceProvider {
+    
+        protected $policies = [
+        ... <-- add your policies classes to this array
+        ];
+    ...
+
 
 and remember to add this provider to your config/app.php .
 
