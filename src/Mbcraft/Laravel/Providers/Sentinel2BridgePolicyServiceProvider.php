@@ -11,12 +11,11 @@ namespace Mbcraft\Laravel\Providers;
 use Sentinel;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Auth\Access\Gate;
-use Mbcraft\Laravel\Providers\Sentinel2BridgePolicyServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
-class SentinelBridgePolicyServiceProvider extends AuthServiceProvider
+class Sentinel2BridgePolicyServiceProvider extends AuthServiceProvider
 {
     protected $policies = [];
     /**
