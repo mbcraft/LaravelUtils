@@ -74,7 +74,7 @@ trait Delete {
 
         \Log::debug("Entity deleted succesfully.");
 
-        $after_delete_result = $this->afterEntityDelete();
+        $after_delete_result = $this->afterEntityDelete($entity);
         if ($after_delete_result != null) {
             return $after_delete_result;
         }
@@ -104,15 +104,15 @@ trait Delete {
     /**
      * Default behavior for 'after entity delete' hook.
      */
-    protected function defaultAfterEntityDelete() {
+    protected function defaultAfterEntityDelete($entity) {
         return null;
     }
 
     /**
      * Hook method called after the entity is deleted.
      */
-    protected function afterEntityDelete() {
-        return $this->defaultAfterEntityDelete();
+    protected function afterEntityDelete($entity) {
+        return $this->defaultAfterEntityDelete($entity);
     }
 
 }
