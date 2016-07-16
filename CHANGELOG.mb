@@ -3,6 +3,8 @@
 - Added deleted entity to after-delete callback
 - Some fixes in README
 - New service provider Sentinel2BridgePolicyServiceProvider for using Sentinel2 package and laravel policies.
+- New lang:overview command
+- New lang:clean command
 
 1.1
 
