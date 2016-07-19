@@ -61,7 +61,7 @@ following lines to your 'app/Console/Kernel.php' file :
 
         \Mbcraft\Laravel\Http\Middleware\BladeWidgetsSyntax::class,
 
-        \Mbcraft\Laravel\Http\Middleware\BladePolicy2Syntax::class,
+        // \Mbcraft\Laravel\Http\Middleware\BladePolicy2Syntax::class,
 
         \Mbcraft\Laravel\Http\Middleware\LocalizationAliases::class
 
@@ -228,14 +228,16 @@ Remember to add the following lines to your app/Console/Kernel.php :
 
 # Laravel Blade Extensions
 
-## Policy
+Skip this one ...
 
-Some people reports that @can blade extension does not work correctly.
-The @ican directive does mostly the same, except that :
-- you close it with the @endcan directive
-- you can pass no other parameters than the check name, and the User Policy class is chosen among the others.
-
-This directive actually uses the policy() helper function which was reported to work.
+    ||## Policy
+    ||
+    ||Some people reports that @can blade extension does not work correctly.
+    ||The @ican directive does mostly the same, except that :
+    ||- you close it with the @endcan directive
+    ||- you can pass no other parameters than the check name, and the User Policy class is chosen among the others.
+    ||
+    ||This directive actually uses the policy() helper function which was reported to work.
 
 ## Resources (assets)
 

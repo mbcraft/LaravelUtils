@@ -1,10 +1,10 @@
-1.2
+dev-master
 
 - Added deleted entity to after-delete callback
 - Some fixes in README
 - New lang:overview command
 - New lang:clean command
-- new @ican blade syntax, for checking policies inside blade templates instead of @can
+- new @ican blade syntax, for checking policies inside blade templates instead of @can, still under testing
 
 1.1
 
