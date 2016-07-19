@@ -228,16 +228,20 @@ Remember to add the following lines to your app/Console/Kernel.php :
 
 # Laravel Blade Extensions
 
-Skip this one ...
 
-    ||## Policy
-    ||
-    ||Some people reports that @can blade extension does not work correctly.
-    ||The @ican directive does mostly the same, except that :
-    ||- you close it with the @endcan directive
-    ||- you can pass no other parameters than the check name, and the User Policy class is chosen among the others.
-    ||
-    ||This directive actually uses the policy() helper function which was reported to work.
+
+## Policy 
+    
+Some people reports that @can blade extension does not work correctly.
+The @ican and @icannot directive does mostly the same, except that :
+- you close it with the @endcan directive
+- you can pass no other parameters than the check name, and the User Policy class is chosen among the others.
+- you can use any number of parameters, it will work as you expect. You never need to pass the user parameter.
+Actually this middleware requires Sentinel v2 : the currently authenticated user is fetched using _Sentinel::getUser()_.
+You can change this behaviour registering your own middleware class overriding BladePolicy2Syntax
+ and the protected variable GET_AUTH_USER inside it.
+    
+This directive actually uses the policy() helper function which was reported to work.
 
 ## Resources (assets)
 
