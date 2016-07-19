@@ -5,6 +5,7 @@
 - New service provider Sentinel2BridgePolicyServiceProvider for using Sentinel2 package and laravel policies.
 - New lang:overview command
 - New lang:clean command
+- new @ican blade syntax, for checking policies inside blade templates instead of @can
 
 1.1
 
