@@ -390,7 +390,7 @@ Simply create your provider class extending Sentinel2BridgePolicyServiceProvider
     ...
 
 
-and remember to add this provider to your config/app.php .
+and remember to add this provider to your config/app.php . This class is still under test.
 
 
 
