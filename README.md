@@ -114,7 +114,8 @@ The following commands are available for artisan :
 - lang:hide -> hides a language folder
 - lang:show -> shows a language folder
 - lang:clean -> removes missing keys comparing two languages
-- lang:regenerate_helpers -> regenerates the language helper classes
+- lang:align -> asks for missing keys comparing two languages
+- lang:regenerate_helpers -> regenerates all the language helper classes
 
 Use these commands to work using only one language folder at a time. Keep in mind
 that the generated helpers will inherit all values from the root language files with the same name, so:
@@ -125,7 +126,7 @@ messages.php
 customers/messages.php   
 
 
-... will generate two classes : 'App\Lang\LMessages.php' and 'App\Lang\Customers\LMessages.php' and the second one will inherit all the values from the previous one, so inside code you will simply use the more specific one but will also be able to access all the values from the generic one.
+... will generate two classes : 'App\Lang\LMessages.php' and 'App\Lang\Customers\LMessages.php' and the second one will inherit all the values from the previous one, so inside code you will simply use the more specific one but will also be able to access all the values from the generic one. This approach should help reducing duplicate keys and save your time.
 
 
 Remember to add the following lines to your app/Console/Kernel.php :

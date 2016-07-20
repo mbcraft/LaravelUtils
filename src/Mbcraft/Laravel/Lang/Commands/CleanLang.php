@@ -99,7 +99,6 @@ class CleanLang extends Command implements SelfHandling
         $folders = $this->ref_lang_dir->listFolders();
 
         $this->processFolders($folders);
-
     }
 
     private function processFolders($folders) {
@@ -138,14 +137,15 @@ class CleanLang extends Command implements SelfHandling
         foreach ($target_props as $key => $value) {
             if (!isset($ref_props[$key])) {
                 $to_print = is_array($value) ? var_export($value,true) : $value;
-                $remove = $this->confirm('Remove unused [' . $context.$key . '=' . $to_print . ']?');
+                $real_context = substr($context." -> ".$key,4);
+                $remove = $this->confirm('Remove unused : [' . $real_context . '=' . $to_print . ']?');
                 if ($remove)  {
                     unset($target_props[$key]);
                     $this->target_lang_file_changed = true;
                 }
             } else {
                 if (is_array($ref_props[$key]) && is_array($value))
-                    $target_props[$key] = $this->compareProps($ref_props[$key],$key." -> ".$context,$target_props[$key]);
+                    $target_props[$key] = $this->compareProps($ref_props[$key],$context." -> ".$key,$target_props[$key]);
             }
         }
         return $target_props;

@@ -1,11 +1,14 @@
+1.3
+
+- New lang:align command that asks for missing keys scanning all the language files
+
 1.2
 
 - Added deleted entity to after-delete callback
 - Some fixes in README
-- New lang:overview command
-- New lang:clean command
-- new @ican and @icannot blade syntax, for checking policies inside blade templates instead of @can
-    and @cannot, tested with 1 and 2 parameters without commas inside.
+- New lang:overview command, shows the used and hidden languages
+- New lang:clean command, scans the language file and asks for entry deletion using a reference language
+- new @ican blade syntax, for checking policies inside blade templates instead of @can
 
 1.1
 
