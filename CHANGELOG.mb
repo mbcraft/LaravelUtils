@@ -1,6 +1,7 @@
-1.3
+1.2.1
 
 - New lang:align command that asks for missing keys scanning all the language files
+- Updated dependencies to piol 2.1.*
 
 1.2
 
