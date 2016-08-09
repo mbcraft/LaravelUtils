@@ -1,3 +1,7 @@
+1.3.2
+
+- Updated @if_has_elements to check if the variable is set.
+
 1.3.1
 
 - Updated composer dependencies to use piol 2.1.*

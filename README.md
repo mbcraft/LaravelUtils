@@ -260,7 +260,7 @@ You can safely call more than once this "require" calls and the resource will ac
 - @ifdef("my_var") ... @endif -> multicheck is also supported, eg: @ifdef("my_var1","my_var2","last_var"). Shows the content only if all the variables are set.
 - @ifndef("my_var") ... @endif -> multicheck is also supported. Shows the content only if all the variables are NOT set.
 - @index("name") -> creates an index equal to 0 named $name . This index is incremented by one each time the @index("name") definition is done. To be used inside @foreach loops. 
-- @if_has_elements($elements) ... @endif -> renders the content only if the array or the laravel collection exists and has at least one element.
+- @if_has_elements($elements) ... @endif -> renders the content only if the array or the laravel collection is set, exists and has at least one element.
 - @safe_count("name")   -> returns count($name) only if $name isset, otherwise returns an empty string.
 - @if_column("column_name") ... @endif -> will show the content only if the column is set inside the $show_columns array OR is not set inside the $hide_columns array. The behaviour of this command is somewhat complex to explain, just use it and remember that, if defined, $show_columns and $hide_columns containing column names will change the behaviour as you expect.
 - @if_action("action_name") ... @endif -> this will work exactly like the @if_column command, but the show and hide array variables are called $show_actions and $hide_actions.
